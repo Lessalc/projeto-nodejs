@@ -13,3 +13,12 @@ Instalação do Express
 
 Instalação da biblioteca de conexão com banco de dados, usaremos o Mongoose
 `npm install mongoose@6.2.6`
+
+Instalação do dotenv
+`npm install dotenv@16.0.3`
+
+Inicializando o ESLint
+`npm init @eslint/config`
+
+Rodando o ESLint para corrigir nosso código
+`npx eslint ./src --fix`
