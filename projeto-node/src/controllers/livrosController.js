@@ -58,20 +58,30 @@ class LivroController{
     }   
   };
 
-  static buscarLivrosPorEditora = async (req, res, next) => {
+  static buscarLivrosPorFiltro = async (req, res, next) => {
     try{
-      const editora = req.query.editora;
-      const livrosEncontrados = await livros.find({"editora": editora}).populate(["autor", "editora"]).exec();
+      const {editora, titulo} = req.query;
+      // const regex = new RegExp(titulo, "i");
+      const busca ={};
+      if(editora) busca.editora = editora;
+      // if(titulo) busca.titulo = regex;
+      if(titulo) busca.titulo = { $regex: titulo, $options: "i"};
+      
+      const livrosEncontrados = await livros.find(busca)
+        .populate(["autor", "editora"]).exec();
       if (livrosEncontrados !== null)
         res.status(200).json(livrosEncontrados);
       else
         next(new NaoEncontrado("Nenhum livro foi encontrado"));
+     
 
     } catch(err) {
       next(err);
     }
 
   };
+
+  
 }
 
 export default LivroController;
